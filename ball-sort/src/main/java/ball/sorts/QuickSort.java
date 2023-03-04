@@ -33,8 +33,8 @@ public class QuickSort {
 
         while (f < l) {
             Ball mid = balls.get((f + l) / 2); // frame element
-            while (ballComparator.compare(balls.get(f), mid) > 0) f++;
-            while (ballComparator.compare(balls.get(l), mid) < 0) l--;
+            while (ballComparator.compare(balls.get(f), mid) < 0) f++;
+            while (ballComparator.compare(balls.get(l), mid) > 0) l--;
 
             if (f <= l) { // swap elements
                 swap(balls, f, l);
