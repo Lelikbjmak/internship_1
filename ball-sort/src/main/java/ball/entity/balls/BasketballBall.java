@@ -3,6 +3,9 @@ package ball.entity.balls;
 import ball.entity.types.Color;
 import ball.entity.types.Type;
 
+/**
+ * Implementation of {@link Ball}
+ */
 public class BasketballBall extends Ball {
 
     public BasketballBall(String name, double circumference,

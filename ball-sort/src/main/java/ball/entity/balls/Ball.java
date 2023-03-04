@@ -5,6 +5,9 @@ import ball.entity.types.Type;
 
 import java.util.Objects;
 
+/**
+ * Ball - frame for all Balls we have.
+ */
 public abstract class Ball implements Comparable<Ball> {
 
     Ball(Type type) {

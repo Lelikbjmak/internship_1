@@ -5,6 +5,9 @@ import ball.entity.balls.Ball;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Basket - Stash all our {@link Ball}
+ */
 public class Basket {
 
     private final ArrayList<Ball> balls;

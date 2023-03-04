@@ -1,5 +1,10 @@
 package ball.entity.types;
 
+import ball.entity.balls.Ball;
+
+/**
+ * Attribute for {@link Ball}
+ */
 public enum Color {
 
     RED,
