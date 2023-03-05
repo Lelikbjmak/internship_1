@@ -7,15 +7,15 @@ import ball.entity.balls.Ball;
  */
 public enum Color {
 
-    RED,
-    GREEN,
-    BLUE,
-    PINK,
-    YELLOW,
-    ORANGE,
     BLACK,
     GREY,
     BROWN,
+    BLUE,
     PURPLE,
+    GREEN,
+    RED,
+    ORANGE,
+    YELLOW,
+    PINK,
     WHITE
 }

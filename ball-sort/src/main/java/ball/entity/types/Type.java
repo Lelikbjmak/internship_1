@@ -7,13 +7,13 @@ import ball.entity.balls.Ball;
  */
 public enum Type {
 
-    BASKETBALL,
     FOOTBALL,
+    BASKETBALL,
     VOLLEYBALL,
+    TENNIS,
     BASEBALL,
     SOCCER,
     HANDBALL,
-    GOLF,
     WATER_POLO,
-    TENNIS
+    GOLF
 }
