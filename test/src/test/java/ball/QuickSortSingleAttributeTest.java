@@ -16,10 +16,8 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class QuickSortTest {
+public class QuickSortSingleAttributeTest {
 
-    // TODO: Make List of Balls bigger -> leverage all types of Balls. Test several attribute sorting
-    // TODO: Test QuickSort with several attributes
     private static final List<Ball> BALLS = new ArrayList<>(List.of(
 
             new BaseballBall("AX-197", 15.5, 123.00, Color.PURPLE),
@@ -99,12 +97,30 @@ public class QuickSortTest {
     }
 
     @Test
+    public void contextLoad() {
+        Assertions.assertNotNull(BALLS);
+        Assertions.assertNotNull(QuickSort.class);
+    }
+
+    @Test
     @DisplayName(value = "Sort by NAME (asc)")
     public void ascSortByName() {
 
         QuickSort.sort(BALLS, BallComparatorFactory.getBallComparator.apply(ComparatorType.ASC_NAME));
         Ball first = new BaseballBall("AM-204", 86.5, 120.0, Color.RED);
         Ball last = new TennisBall("zzz", 7.93, 93.18, Color.GREEN);
+
+        Assertions.assertEquals(first, BALLS.get(0), "Incorrect first element after sort by 'NAME' attribute.");
+        Assertions.assertEquals(last, BALLS.get(BALLS.size() - 1), "Incorrect last element after sort by 'NAME' attribute.");
+    }
+
+    @Test
+    @DisplayName(value = "Sort by NAME (asc)")
+    public void descSortByName() {
+
+        QuickSort.sort(BALLS, BallComparatorFactory.getBallComparator.apply(ComparatorType.DESC_NAME));
+        Ball last = new BaseballBall("AM-204", 86.5, 120.0, Color.RED);
+        Ball first = new TennisBall("zzz", 7.93, 93.18, Color.GREEN);
 
         Assertions.assertEquals(first, BALLS.get(0), "Incorrect first element after sort by 'NAME' attribute.");
         Assertions.assertEquals(last, BALLS.get(BALLS.size() - 1), "Incorrect last element after sort by 'NAME' attribute.");
@@ -123,6 +139,23 @@ public class QuickSortTest {
     }
 
     @Test
+    @DisplayName(value = "Sort by WEIGHT (desc)")
+    public void descSortByWeight() {
+
+        Ball last = new WaterPoloBall("La-18", 98.2, 1, Color.PINK);
+        Ball first = new BasketballBall("Kx-10", 19.0, 28239.2, Color.ORANGE);
+
+        QuickSort.sort(BALLS, BallComparatorFactory.getBallComparator.apply(ComparatorType.DESC_WEIGHT));
+        Assertions.assertEquals(first, BALLS.get(0), "Incorrect first element after sort by 'WEIGHT' attribute.");
+        Assertions.assertEquals(last, BALLS.get(BALLS.size() - 1), "Incorrect last element after sort by 'WEIGHT' attribute.");
+    }
+
+    /**
+     * Due to the fact that we shuffle our List before each test
+     * hence it's mad hard to anticipate a certain Ball as 'first' and 'last' elements after sort
+     * that's why we compare only colors.
+     */
+    @Test
     @DisplayName(value = "Sort by COLOR (asc)")
     public void ascSortByColor() {
 
@@ -134,13 +167,55 @@ public class QuickSortTest {
         Assertions.assertEquals(last, BALLS.get(BALLS.size() - 1).getColor(), "Incorrect last element after sort by 'COLOR' attribute.");
     }
 
+    /**
+     * Due to the fact that we shuffle our List before each test
+     * hence it's mad hard to anticipate a certain Ball as 'first' and 'last' elements after sort
+     * that's why we compare only colors.
+     */
+    @Test
+    @DisplayName(value = "Sort by COLOR (desc)")
+    public void descSortByColor() {
+
+        Color last = Color.BLACK;
+        Color first = Color.YELLOW;
+
+        QuickSort.sort(BALLS, BallComparatorFactory.getBallComparator.apply(ComparatorType.DESC_COLOR));
+        Assertions.assertEquals(first, BALLS.get(0).getColor(), "Incorrect first element after sort by 'COLOR' attribute.");
+        Assertions.assertEquals(last, BALLS.get(BALLS.size() - 1).getColor(), "Incorrect last element after sort by 'COLOR' attribute.");
+    }
+
+    /**
+     * Due to the fact that we shuffle our List before each test
+     * hence it's mad hard to anticipate a certain Ball as 'first' and 'last' elements after sort
+     * that's why we compare only Type of balls.
+     */
     @Test
     @DisplayName(value = "Sort by TYPE (asc)")
     public void ascSortByType() {
 
+        Type first = Type.BASEBALL;
+        Type last = Type.WATER_POLO;
+
         QuickSort.sort(BALLS, BallComparatorFactory.getBallComparator.apply(ComparatorType.ASC_TYPE));
-        Assertions.assertEquals(Type.BASEBALL, BALLS.get(0).getType(), "Incorrect first element after sort by 'TYPE' attribute.");
-        Assertions.assertEquals(Type.WATER_POLO, BALLS.get(BALLS.size() - 1).getType(), "Incorrect last element after sort by 'TYPE' attribute.");
+        Assertions.assertEquals(first, BALLS.get(0).getType(), "Incorrect first element after sort by 'TYPE' attribute.");
+        Assertions.assertEquals(last, BALLS.get(BALLS.size() - 1).getType(), "Incorrect last element after sort by 'TYPE' attribute.");
+    }
+
+    /**
+     * Due to the fact that we shuffle our List before each test
+     * hence it's mad hard to anticipate a certain Ball as 'first' and 'last' elements after sort
+     * that's why we compare only Type of balls.
+     */
+    @Test
+    @DisplayName(value = "Sort by TYPE (desc)")
+    public void descSortByType() {
+
+        Type first = Type.WATER_POLO;
+        Type last = Type.BASEBALL;
+
+        QuickSort.sort(BALLS, BallComparatorFactory.getBallComparator.apply(ComparatorType.DESC_TYPE));
+        Assertions.assertEquals(first, BALLS.get(0).getType(), "Incorrect first element after sort by 'TYPE' attribute.");
+        Assertions.assertEquals(last, BALLS.get(BALLS.size() - 1).getType(), "Incorrect last element after sort by 'TYPE' attribute.");
     }
 
     @Test
@@ -151,6 +226,18 @@ public class QuickSortTest {
         Ball last = new WaterPoloBall("Fifa", 1090.90, 763, Color.BLUE);
 
         QuickSort.sort(BALLS, BallComparatorFactory.getBallComparator.apply(ComparatorType.ASC_CIRCUMFERENCE));
+        Assertions.assertEquals(first, BALLS.get(0), "Incorrect first element after sort by 'CIRCUMFERENCE' attribute.");
+        Assertions.assertEquals(last, BALLS.get(BALLS.size() - 1), "Incorrect last element after sort by 'CIRCUMFERENCE' attribute.");
+    }
+
+    @Test
+    @DisplayName(value = "Sort by CIRCUMFERENCE (desc)")
+    public void descSortByCircumference() {
+
+        Ball last = new WaterPoloBall("Lnvs", 2.20, 9, Color.PURPLE);
+        Ball first = new WaterPoloBall("Fifa", 1090.90, 763, Color.BLUE);
+
+        QuickSort.sort(BALLS, BallComparatorFactory.getBallComparator.apply(ComparatorType.DESC_CIRCUMFERENCE));
         Assertions.assertEquals(first, BALLS.get(0), "Incorrect first element after sort by 'CIRCUMFERENCE' attribute.");
         Assertions.assertEquals(last, BALLS.get(BALLS.size() - 1), "Incorrect last element after sort by 'CIRCUMFERENCE' attribute.");
     }
