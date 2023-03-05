@@ -1,11 +1,15 @@
 package ball.entity.factory;
 
 import ball.entity.ball_comparator.BallComparator;
-import ball.entity.ball_comparator.BallComparatorUtils;
+import ball.util.BallComparatorUtils;
+import ball.util.ColorPriorityBuilder;
 import ball.entity.ball_comparator.ComparatorType;
 import ball.entity.balls.Ball;
+import ball.entity.types.Color;
 
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 /**
@@ -72,5 +76,38 @@ public class BallComparatorFactory {
         }
 
         return ballComparatorChain;
+    }
+
+    private static Map<Color, Integer> getDefaultColorPriorityMap() {
+        Map<Color, Integer> colorPriority = new HashMap<>();
+        for (Color color :
+                Color.values()) {
+            colorPriority.put(color, 0);
+        }
+        return colorPriority;
+    }
+
+    public static BallComparator getCustomColorPriorityBallComparator(Map<Color, Integer> colorPriority) {
+        ColorPriorityBuilder builder = new ColorPriorityBuilder();
+        BallComparatorUtils.setColorPriorityMap(builder.getCustomColorPriorityMap(colorPriority));
+        return BallComparatorUtils::compareByColorPriority;
+    }
+
+    public static BallComparator getRandomColorPriorityBallComparator() {
+        ColorPriorityBuilder builder = new ColorPriorityBuilder();
+        BallComparatorUtils.setColorPriorityMap(builder.getRandomColorPriorityMap());
+        return BallComparatorUtils::compareByColorPriority;
+    }
+
+    public static BallComparator getDarkToLightColorPriorityBallComparator() {
+        ColorPriorityBuilder builder = new ColorPriorityBuilder();
+        BallComparatorUtils.setColorPriorityMap(builder.getDarkToLightColorPriorityMap());
+        return BallComparatorUtils::compareByColorPriority;
+    }
+
+    public static BallComparator getLightToDarkColorPriorityBallComparator() {
+        ColorPriorityBuilder builder = new ColorPriorityBuilder();
+        BallComparatorUtils.setColorPriorityMap(builder.getLightToColorPriorityMap());
+        return BallComparatorUtils::compareByColorPriority;
     }
 }
