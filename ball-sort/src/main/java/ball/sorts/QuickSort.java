@@ -30,9 +30,9 @@ public class QuickSort {
     private static void quickSort(List<Ball> balls, int first, int last, Comparator<Ball> ballComparator) {
 
         int f = first, l = last;
+        Ball mid = balls.get((f + l) / 2); // frame element
 
         while (f < l) {
-            Ball mid = balls.get((f + l) / 2); // frame element
             while (ballComparator.compare(balls.get(f), mid) < 0) f++;
             while (ballComparator.compare(balls.get(l), mid) > 0) l--;
 
