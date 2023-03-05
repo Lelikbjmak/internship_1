@@ -112,10 +112,15 @@ public class QuickSortSingleAttributeTest {
 
         Assertions.assertEquals(first, BALLS.get(0), "Incorrect first element after sort by 'NAME' attribute.");
         Assertions.assertEquals(last, BALLS.get(BALLS.size() - 1), "Incorrect last element after sort by 'NAME' attribute.");
+
+        List<String> ballNames = BALLS.stream()
+                .map(Ball::getName).toList();
+
+        Assertions.assertTrue(isAscArray(ballNames, ballNames.size()));
     }
 
     @Test
-    @DisplayName(value = "Sort by NAME (asc)")
+    @DisplayName(value = "Sort by NAME (desc)")
     public void descSortByName() {
 
         QuickSort.sort(BALLS, BallComparatorFactory.getBallComparator.apply(ComparatorType.DESC_NAME));
@@ -124,6 +129,11 @@ public class QuickSortSingleAttributeTest {
 
         Assertions.assertEquals(first, BALLS.get(0), "Incorrect first element after sort by 'NAME' attribute.");
         Assertions.assertEquals(last, BALLS.get(BALLS.size() - 1), "Incorrect last element after sort by 'NAME' attribute.");
+
+        List<String> ballNames = BALLS.stream()
+                .map(Ball::getName).toList();
+
+        Assertions.assertTrue(isDescArray(ballNames, ballNames.size()));
     }
 
     @Test
@@ -134,8 +144,12 @@ public class QuickSortSingleAttributeTest {
         Ball last = new BasketballBall("Kx-10", 19.0, 28239.2, Color.ORANGE);
 
         QuickSort.sort(BALLS, BallComparatorFactory.getBallComparator.apply(ComparatorType.ASC_WEIGHT));
+
         Assertions.assertEquals(first, BALLS.get(0), "Incorrect first element after sort by 'WEIGHT' attribute.");
         Assertions.assertEquals(last, BALLS.get(BALLS.size() - 1), "Incorrect last element after sort by 'WEIGHT' attribute.");
+
+        double[] ballsWeight = BALLS.stream().mapToDouble(Ball::getWeight).toArray();
+        Assertions.assertTrue(isAscArray(ballsWeight, ballsWeight.length));
     }
 
     @Test
@@ -146,8 +160,12 @@ public class QuickSortSingleAttributeTest {
         Ball first = new BasketballBall("Kx-10", 19.0, 28239.2, Color.ORANGE);
 
         QuickSort.sort(BALLS, BallComparatorFactory.getBallComparator.apply(ComparatorType.DESC_WEIGHT));
+
         Assertions.assertEquals(first, BALLS.get(0), "Incorrect first element after sort by 'WEIGHT' attribute.");
         Assertions.assertEquals(last, BALLS.get(BALLS.size() - 1), "Incorrect last element after sort by 'WEIGHT' attribute.");
+
+        double[] ballsWeight = BALLS.stream().mapToDouble(Ball::getWeight).toArray();
+        Assertions.assertTrue(isDescArray(ballsWeight, ballsWeight.length));
     }
 
     /**
@@ -163,8 +181,15 @@ public class QuickSortSingleAttributeTest {
         Color last = Color.YELLOW;
 
         QuickSort.sort(BALLS, BallComparatorFactory.getBallComparator.apply(ComparatorType.ASC_COLOR));
+
         Assertions.assertEquals(first, BALLS.get(0).getColor(), "Incorrect first element after sort by 'COLOR' attribute.");
         Assertions.assertEquals(last, BALLS.get(BALLS.size() - 1).getColor(), "Incorrect last element after sort by 'COLOR' attribute.");
+
+        List<String> ballColors = BALLS.stream()
+                .map(ball -> ball.getColor().name()).toList();
+
+        Assertions.assertTrue(isAscArray(ballColors, ballColors.size()));
+
     }
 
     /**
@@ -180,8 +205,14 @@ public class QuickSortSingleAttributeTest {
         Color first = Color.YELLOW;
 
         QuickSort.sort(BALLS, BallComparatorFactory.getBallComparator.apply(ComparatorType.DESC_COLOR));
+
         Assertions.assertEquals(first, BALLS.get(0).getColor(), "Incorrect first element after sort by 'COLOR' attribute.");
         Assertions.assertEquals(last, BALLS.get(BALLS.size() - 1).getColor(), "Incorrect last element after sort by 'COLOR' attribute.");
+
+        List<String> ballColors = BALLS.stream()
+                .map(ball -> ball.getColor().name()).toList();
+
+        Assertions.assertTrue(isDescArray(ballColors, ballColors.size()));
     }
 
     /**
@@ -197,8 +228,14 @@ public class QuickSortSingleAttributeTest {
         Type last = Type.WATER_POLO;
 
         QuickSort.sort(BALLS, BallComparatorFactory.getBallComparator.apply(ComparatorType.ASC_TYPE));
+
         Assertions.assertEquals(first, BALLS.get(0).getType(), "Incorrect first element after sort by 'TYPE' attribute.");
         Assertions.assertEquals(last, BALLS.get(BALLS.size() - 1).getType(), "Incorrect last element after sort by 'TYPE' attribute.");
+
+        List<String> ballTypes = BALLS.stream()
+                .map(ball -> ball.getType().name()).toList();
+
+        Assertions.assertTrue(isAscArray(ballTypes, ballTypes.size()));
     }
 
     /**
@@ -214,8 +251,14 @@ public class QuickSortSingleAttributeTest {
         Type last = Type.BASEBALL;
 
         QuickSort.sort(BALLS, BallComparatorFactory.getBallComparator.apply(ComparatorType.DESC_TYPE));
+
         Assertions.assertEquals(first, BALLS.get(0).getType(), "Incorrect first element after sort by 'TYPE' attribute.");
         Assertions.assertEquals(last, BALLS.get(BALLS.size() - 1).getType(), "Incorrect last element after sort by 'TYPE' attribute.");
+
+        List<String> ballTypes = BALLS.stream()
+                .map(ball -> ball.getType().name()).toList();
+
+        Assertions.assertTrue(isDescArray(ballTypes, ballTypes.size()));
     }
 
     @Test
@@ -226,8 +269,12 @@ public class QuickSortSingleAttributeTest {
         Ball last = new WaterPoloBall("Fifa", 1090.90, 763, Color.BLUE);
 
         QuickSort.sort(BALLS, BallComparatorFactory.getBallComparator.apply(ComparatorType.ASC_CIRCUMFERENCE));
+
         Assertions.assertEquals(first, BALLS.get(0), "Incorrect first element after sort by 'CIRCUMFERENCE' attribute.");
         Assertions.assertEquals(last, BALLS.get(BALLS.size() - 1), "Incorrect last element after sort by 'CIRCUMFERENCE' attribute.");
+
+        double[] ballsCircumferences = BALLS.stream().mapToDouble(Ball::getCircumference).toArray();
+        Assertions.assertTrue(isAscArray(ballsCircumferences, ballsCircumferences.length));
     }
 
     @Test
@@ -238,7 +285,33 @@ public class QuickSortSingleAttributeTest {
         Ball first = new WaterPoloBall("Fifa", 1090.90, 763, Color.BLUE);
 
         QuickSort.sort(BALLS, BallComparatorFactory.getBallComparator.apply(ComparatorType.DESC_CIRCUMFERENCE));
+
         Assertions.assertEquals(first, BALLS.get(0), "Incorrect first element after sort by 'CIRCUMFERENCE' attribute.");
         Assertions.assertEquals(last, BALLS.get(BALLS.size() - 1), "Incorrect last element after sort by 'CIRCUMFERENCE' attribute.");
+
+        double[] ballsCircumferences = BALLS.stream().mapToDouble(Ball::getCircumference).toArray();
+        Assertions.assertTrue(isDescArray(ballsCircumferences, ballsCircumferences.length));
+    }
+
+    private static boolean isAscArray(double[] array, int n) {
+        if (n == 1 || n == 0) return true;
+        return array[n - 2] <= array[n - 1] && isAscArray(array, n - 1);
+    }
+
+    private static boolean isDescArray(double[] array, int n) {
+        if (n == 1 || n == 0) return true;
+        return array[n - 2] >= array[n - 1] && isDescArray(array, n - 1);
+    }
+
+    private static boolean isAscArray(List<String> array, int n) {
+        if (n == 1 || n == 0) return true;
+        boolean compareResult = array.get(n - 2).compareTo(array.get(n - 1)) < 1;
+        return compareResult && isAscArray(array, n - 1);
+    }
+
+    private static boolean isDescArray(List<String> array, int n) {
+        if (n == 1 || n == 0) return true;
+        boolean compareResult = array.get(n - 2).compareTo(array.get(n - 1)) > -1;
+        return compareResult && isDescArray(array, n - 1);
     }
 }
