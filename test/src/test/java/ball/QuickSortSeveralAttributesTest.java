@@ -100,6 +100,138 @@ public class QuickSortSeveralAttributesTest {
     }
 
     @Test
+    @DisplayName("Sort by NAME(asc), WEIGHT(asc)")
+    public void ascNameAscWeightSort() {
+
+        String firstName = "AM-204";
+        String lastName = "zzz";
+
+        SortingAlgorithm.quickSort(BALLS, BallComparatorFactory
+                .getBallComparatorChain(ComparatorType.ASC_NAME, ComparatorType.ASC_WEIGHT));
+
+        Assertions.assertEquals(0, firstName.compareTo(BALLS.get(0).getName()),
+                "Name of first element doesn't match after NAME(asc), WEIGHT(asc) sort.");
+        Assertions.assertEquals(0, lastName.compareTo(BALLS.get(BALLS.size() - 1).getName()),
+                "Name of last element doesn't match after NAME(asc), WEIGHT(asc) sort.");
+
+        List<String> ballNames = BALLS.stream().map((Ball::getName)).toList();
+        Assertions.assertTrue(isAscArray(ballNames, ballNames.size()),
+                "Attribute NAME isn't sorted (asc).");
+
+        Map<String, double[]> ballsWeight = new HashMap<>();
+        for (String name :
+                ballNames) {
+            ballsWeight.put(name, BALLS.stream()
+                    .filter(ball -> ball.getName().equals(name))
+                    .mapToDouble(Ball::getWeight)
+                    .toArray());
+        }
+
+        ballsWeight.forEach((name, ballsWeightPerType) ->
+                Assertions.assertTrue(isAscArray(ballsWeightPerType, ballsWeightPerType.length),
+                        "Attribute WEIGHT isn't sorted (asc) for NAME: " + name + "."));
+    }
+
+    @Test
+    @DisplayName("Sort by NAME(desc), WEIGHT(asc)")
+    public void descNameAscWeightSort() {
+
+        String lastName = "AM-204";
+        String firstName = "zzz";
+
+        SortingAlgorithm.quickSort(BALLS, BallComparatorFactory
+                .getBallComparatorChain(ComparatorType.DESC_NAME, ComparatorType.ASC_WEIGHT));
+
+        Assertions.assertEquals(0, firstName.compareTo(BALLS.get(0).getName()),
+                "Name of first element doesn't match after NAME(desc), WEIGHT(asc) sort.");
+        Assertions.assertEquals(0, lastName.compareTo(BALLS.get(BALLS.size() - 1).getName()),
+                "Name of last element doesn't match after NAME(desc), WEIGHT(asc) sort.");
+
+        List<String> ballNames = BALLS.stream().map((Ball::getName)).toList();
+        Assertions.assertTrue(isDescArray(ballNames, ballNames.size()),
+                "Attribute NAME isn't sorted (desc).");
+
+        Map<String, double[]> ballsWeight = new HashMap<>();
+        for (String name :
+                ballNames) {
+            ballsWeight.put(name, BALLS.stream()
+                    .filter(ball -> ball.getName().equals(name))
+                    .mapToDouble(Ball::getWeight)
+                    .toArray());
+        }
+
+        ballsWeight.forEach((name, ballsWeightPerType) ->
+                Assertions.assertTrue(isAscArray(ballsWeightPerType, ballsWeightPerType.length),
+                        "Attribute WEIGHT isn't sorted (asc) for NAME: " + name + "."));
+    }
+
+    @Test
+    @DisplayName("Sort by NAME(asc), WEIGHT(desc)")
+    public void ascNameDescWeightSort() {
+
+        String firstName = "AM-204";
+        String lastName = "zzz";
+
+        SortingAlgorithm.quickSort(BALLS, BallComparatorFactory
+                .getBallComparatorChain(ComparatorType.ASC_NAME, ComparatorType.DESC_WEIGHT));
+
+        Assertions.assertEquals(0, firstName.compareTo(BALLS.get(0).getName()),
+                "Name of first element doesn't match after NAME(asc), WEIGHT(desc) sort.");
+        Assertions.assertEquals(0, lastName.compareTo(BALLS.get(BALLS.size() - 1).getName()),
+                "Name of last element doesn't match after NAME(asc), WEIGHT(desc) sort.");
+
+        List<String> ballNames = BALLS.stream().map((Ball::getName)).toList();
+        Assertions.assertTrue(isAscArray(ballNames, ballNames.size()),
+                "Attribute NAME isn't sorted (asc).");
+
+        Map<String, double[]> ballsWeight = new HashMap<>();
+        for (String name :
+                ballNames) {
+            ballsWeight.put(name, BALLS.stream()
+                    .filter(ball -> ball.getName().equals(name))
+                    .mapToDouble(Ball::getWeight)
+                    .toArray());
+        }
+
+        ballsWeight.forEach((name, ballsWeightPerType) ->
+                Assertions.assertTrue(isDescArray(ballsWeightPerType, ballsWeightPerType.length),
+                        "Attribute WEIGHT isn't sorted (desc) for NAME: " + name + "."));
+    }
+
+    @Test
+    @DisplayName("Sort by NAME(desc), WEIGHT(desc)")
+    public void descNameDescWeightSort() {
+
+        String lastName = "AM-204";
+        String firstName = "zzz";
+
+        SortingAlgorithm.quickSort(BALLS, BallComparatorFactory
+                .getBallComparatorChain(ComparatorType.DESC_NAME, ComparatorType.DESC_WEIGHT));
+
+        Assertions.assertEquals(0, firstName.compareTo(BALLS.get(0).getName()),
+                "Name of first element doesn't match after NAME(desc), WEIGHT(desc) sort.");
+        Assertions.assertEquals(0, lastName.compareTo(BALLS.get(BALLS.size() - 1).getName()),
+                "Name of last element doesn't match after NAME(desc), WEIGHT(desc) sort.");
+
+        List<String> ballNames = BALLS.stream().map((Ball::getName)).toList();
+        Assertions.assertTrue(isDescArray(ballNames, ballNames.size()),
+                "Attribute NAME isn't sorted (desc).");
+
+        Map<String, double[]> ballsWeight = new HashMap<>();
+        for (String name :
+                ballNames) {
+            ballsWeight.put(name, BALLS.stream()
+                    .filter(ball -> ball.getName().equals(name))
+                    .mapToDouble(Ball::getWeight)
+                    .toArray());
+        }
+
+        ballsWeight.forEach((name, ballsWeightPerType) ->
+                Assertions.assertTrue(isDescArray(ballsWeightPerType, ballsWeightPerType.length),
+                        "Attribute WEIGHT isn't sorted (desc) for NAME: " + name + "."));
+    }
+
+    @Test
     @DisplayName("Sort by TYPE(asc), WEIGHT(asc)")
     public void ascTypeAscWeightSort() {
 
@@ -678,6 +810,189 @@ public class QuickSortSeveralAttributesTest {
                 mapOfColorAndWeightArray.forEach((color, weightArray) ->
                         Assertions.assertTrue(isAscArray(weightArray, weightArray.length),
                                 "Attribute WEIGHT isn't sorted (asc) for TYPE: " + type.name() + "[" + color + "]")));
+    }
+
+    @Test
+    @DisplayName("Sort by TYPE(desc), COLOR(desc), WEIGHT(asc)")
+    public void descTypeDescColorAscWeightSort() {
+
+        Type first = Type.WATER_POLO;
+        Type last = Type.BASEBALL;
+
+        SortingAlgorithm.quickSort(BALLS, BallComparatorFactory
+                .getBallComparatorChain(ComparatorType.DESC_TYPE, ComparatorType.DESC_COLOR, ComparatorType.ASC_WEIGHT));
+
+        Assertions.assertEquals(first, BALLS.get(0).getType(),
+                "First element color doesn't match after TYPE(desc), COLOR(desc), WEIGHT(asc) sort.");
+        Assertions.assertEquals(last, BALLS.get(BALLS.size() - 1).getType(),
+                "First element color doesn't match after TYPE(desc), COLOR(desc), WEIGHT(asc) sort.");
+
+        List<String> ballTypes = BALLS.stream().map(ball -> ball.getType().name()).toList();
+        Assertions.assertTrue(isDescArray(ballTypes, ballTypes.size()),
+                "Attribute TYPE isn't sorted (desc).");
+
+        Map<Type, List<String>> ballColors = new HashMap<>();
+        for (Type type :
+                Type.values()) {
+            ballColors.put(type, BALLS.stream()
+                    .filter(ball -> ball.getType().equals(type))
+                    .map(ball -> ball.getColor().name())
+                    .toList());
+        }
+
+        ballColors.forEach((type, ballColorsPerType) ->
+                Assertions.assertTrue(isDescArray(ballColorsPerType, ballColorsPerType.size()),
+                        "Attribute COLOR isn't sorted (desc) for TYPE: " + type.name() + "."));
+
+        Map<Type, List<Ball>> ballsPerType = new HashMap<>();
+        for (Type type :
+                Type.values()) {
+            ballsPerType.put(type, BALLS.stream()
+                    .filter(ball -> ball.getType().equals(type))
+                    .toList());
+        }
+
+        Map<Type, Map<Color, double[]>> weightsPerColorForType = new HashMap<>();
+
+        ballsPerType.forEach((k, v) -> {
+            Map<Color, double[]> weightForTypePerCertainColor = new HashMap<>();
+            for (Color color :
+                    Color.values()) {
+                weightForTypePerCertainColor.put(color, v.stream()
+                        .filter(ball -> ball.getColor().equals(color))
+                        .mapToDouble(Ball::getWeight).toArray());
+                weightForTypePerCertainColor.forEach((color1, weights) -> {
+                });
+            }
+            weightsPerColorForType.put(k, weightForTypePerCertainColor);
+        });
+
+        weightsPerColorForType.forEach((type, mapOfColorAndWeightArray) ->
+                mapOfColorAndWeightArray.forEach((color, weightArray) ->
+                        Assertions.assertTrue(isAscArray(weightArray, weightArray.length),
+                                "Attribute WEIGHT isn't sorted (asc) for TYPE: " + type.name() + "[" + color + "]")));
+    }
+
+    @Test
+    @DisplayName("Sort by TYPE(desc), COLOR(asc), WEIGHT(desc)")
+    public void descTypeAscColorDescWeightSort() {
+
+        Type first = Type.WATER_POLO;
+        Type last = Type.BASEBALL;
+
+        SortingAlgorithm.quickSort(BALLS, BallComparatorFactory
+                .getBallComparatorChain(ComparatorType.DESC_TYPE, ComparatorType.ASC_COLOR, ComparatorType.DESC_WEIGHT));
+
+        Assertions.assertEquals(first, BALLS.get(0).getType(),
+                "First element color doesn't match after TYPE(desc), COLOR(asc), WEIGHT(desc) sort.");
+        Assertions.assertEquals(last, BALLS.get(BALLS.size() - 1).getType(),
+                "First element color doesn't match after TYPE(desc), COLOR(asc), WEIGHT(desc) sort.");
+
+        List<String> ballTypes = BALLS.stream().map(ball -> ball.getType().name()).toList();
+        Assertions.assertTrue(isDescArray(ballTypes, ballTypes.size()),
+                "Attribute TYPE isn't sorted (desc).");
+
+        Map<Type, List<String>> ballColors = new HashMap<>();
+        for (Type type :
+                Type.values()) {
+            ballColors.put(type, BALLS.stream()
+                    .filter(ball -> ball.getType().equals(type))
+                    .map(ball -> ball.getColor().name())
+                    .toList());
+        }
+
+        ballColors.forEach((type, ballColorsPerType) ->
+                Assertions.assertTrue(isAscArray(ballColorsPerType, ballColorsPerType.size()),
+                        "Attribute COLOR isn't sorted (asc) for TYPE: " + type.name() + "."));
+
+        Map<Type, List<Ball>> ballsPerType = new HashMap<>();
+        for (Type type :
+                Type.values()) {
+            ballsPerType.put(type, BALLS.stream()
+                    .filter(ball -> ball.getType().equals(type))
+                    .toList());
+        }
+
+        Map<Type, Map<Color, double[]>> weightsPerColorForType = new HashMap<>();
+
+        ballsPerType.forEach((k, v) -> {
+            Map<Color, double[]> weightForTypePerCertainColor = new HashMap<>();
+            for (Color color :
+                    Color.values()) {
+                weightForTypePerCertainColor.put(color, v.stream()
+                        .filter(ball -> ball.getColor().equals(color))
+                        .mapToDouble(Ball::getWeight).toArray());
+                weightForTypePerCertainColor.forEach((color1, weights) -> {
+                });
+            }
+            weightsPerColorForType.put(k, weightForTypePerCertainColor);
+        });
+
+        weightsPerColorForType.forEach((type, mapOfColorAndWeightArray) ->
+                mapOfColorAndWeightArray.forEach((color, weightArray) ->
+                        Assertions.assertTrue(isDescArray(weightArray, weightArray.length),
+                                "Attribute WEIGHT isn't sorted (desc) for TYPE: " + type.name() + "[" + color + "]")));
+    }
+
+    @Test
+    @DisplayName("Sort by TYPE(asc), COLOR(asc), WEIGHT(desc)")
+    public void ascTypeAscColorDescWeightSort() {
+
+        Type first = Type.BASEBALL;
+        Type last = Type.WATER_POLO;
+
+        SortingAlgorithm.quickSort(BALLS, BallComparatorFactory
+                .getBallComparatorChain(ComparatorType.ASC_TYPE, ComparatorType.ASC_COLOR, ComparatorType.DESC_WEIGHT));
+
+        Assertions.assertEquals(first, BALLS.get(0).getType(),
+                "First element color doesn't match after TYPE(asc), COLOR(asc), WEIGHT(desc) sort.");
+        Assertions.assertEquals(last, BALLS.get(BALLS.size() - 1).getType(),
+                "First element color doesn't match after TYPE(asc), COLOR(asc), WEIGHT(desc) sort.");
+
+        List<String> ballTypes = BALLS.stream().map(ball -> ball.getType().name()).toList();
+        Assertions.assertTrue(isAscArray(ballTypes, ballTypes.size()),
+                "Attribute TYPE isn't sorted (asc).");
+
+        Map<Type, List<String>> ballColors = new HashMap<>();
+        for (Type type :
+                Type.values()) {
+            ballColors.put(type, BALLS.stream()
+                    .filter(ball -> ball.getType().equals(type))
+                    .map(ball -> ball.getColor().name())
+                    .toList());
+        }
+
+        ballColors.forEach((type, ballColorsPerType) ->
+                Assertions.assertTrue(isAscArray(ballColorsPerType, ballColorsPerType.size()),
+                        "Attribute COLOR isn't sorted (asc) for TYPE: " + type.name() + "."));
+
+        Map<Type, List<Ball>> ballsPerType = new HashMap<>();
+        for (Type type :
+                Type.values()) {
+            ballsPerType.put(type, BALLS.stream()
+                    .filter(ball -> ball.getType().equals(type))
+                    .toList());
+        }
+
+        Map<Type, Map<Color, double[]>> weightsPerColorForType = new HashMap<>();
+
+        ballsPerType.forEach((k, v) -> {
+            Map<Color, double[]> weightForTypePerCertainColor = new HashMap<>();
+            for (Color color :
+                    Color.values()) {
+                weightForTypePerCertainColor.put(color, v.stream()
+                        .filter(ball -> ball.getColor().equals(color))
+                        .mapToDouble(Ball::getWeight).toArray());
+                weightForTypePerCertainColor.forEach((color1, weights) -> {
+                });
+            }
+            weightsPerColorForType.put(k, weightForTypePerCertainColor);
+        });
+
+        weightsPerColorForType.forEach((type, mapOfColorAndWeightArray) ->
+                mapOfColorAndWeightArray.forEach((color, weightArray) ->
+                        Assertions.assertTrue(isDescArray(weightArray, weightArray.length),
+                                "Attribute WEIGHT isn't sorted (desc) for TYPE: " + type.name() + "[" + color + "]")));
     }
 
     private static boolean isAscArray(double[] array, int n) {
