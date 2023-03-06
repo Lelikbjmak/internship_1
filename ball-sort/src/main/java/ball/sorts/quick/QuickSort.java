@@ -1,4 +1,4 @@
-package ball.sorts;
+package ball.sorts.quick;
 
 import ball.entity.ball_comparator.ComparatorType;
 import ball.entity.balls.Ball;
