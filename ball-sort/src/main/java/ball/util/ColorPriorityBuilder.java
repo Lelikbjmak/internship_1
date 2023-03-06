@@ -11,7 +11,7 @@ public class ColorPriorityBuilder {
     public ColorPriorityBuilder() {
     }
 
-    public Map<Color, Integer> getEqualPriorityColorMap() {
+    private Map<Color, Integer> getEqualPriorityColorMap() {
         Map<Color, Integer> priorityColorMap = new HashMap<>();
         for (Color color :
                 Color.values()) {
@@ -35,7 +35,7 @@ public class ColorPriorityBuilder {
         return priorityColorMap;
     }
 
-    public Map<Color, Integer> getLightToColorPriorityMap() {
+    public Map<Color, Integer> getLightToDarkColorPriorityMap() {
         Map<Color, Integer> priorityColorMap = new HashMap<>();
         for (Color color :
                 Color.values()) {
