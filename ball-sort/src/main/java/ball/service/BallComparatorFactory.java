@@ -1,4 +1,4 @@
-package ball.entity.factory;
+package ball.service;
 
 import ball.entity.ball_comparator.BallComparator;
 import ball.entity.ball_comparator.ComparatorType;

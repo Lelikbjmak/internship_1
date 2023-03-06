@@ -1,4 +1,4 @@
-package ball.entity.factory;
+package ball.service;
 
 import ball.dto.BallProductionRequest;
 import ball.entity.balls.Ball;
