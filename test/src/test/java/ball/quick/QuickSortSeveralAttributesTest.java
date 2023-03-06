@@ -1,12 +1,13 @@
-package ball;
+package ball.quick;
 
 import ball.entity.ball_comparator.ComparatorType;
 import ball.entity.balls.*;
-import ball.entity.factory.BallComparatorFactory;
 import ball.entity.types.Color;
 import ball.entity.types.Type;
-import ball.sorts.QuickSort;
-import ball.sorts.SortingAlgorithm;
+import ball.service.BallComparatorFactory;
+import ball.service.SortingAlgorithm;
+import ball.util.ColorPriorityBuilder;
+import ball.util.TypePriorityBuilder;
 import org.junit.jupiter.api.*;
 
 import java.util.*;
@@ -96,7 +97,7 @@ public class QuickSortSeveralAttributesTest {
     @Order(value = 1)
     public void contextLoad() {
         Assertions.assertNotNull(BALLS);
-        Assertions.assertNotNull(QuickSort.class);
+        Assertions.assertNotNull(SortingAlgorithm.class);
     }
 
     @Test
@@ -630,6 +631,124 @@ public class QuickSortSeveralAttributesTest {
     }
 
     @Test
+    @DisplayName("Sort by TYPE(TO_LARGE), COLOR(CUSTOM_PRIORITY)")
+    public void typePriorityToLargeColorCustomPrioritySort() {
+
+        Type firstType = Type.GOLF; // the smallest
+
+        Comparator<Ball> ballComparator = BallComparatorFactory
+                .addColorPriorityComparesToChain(Map.of(Color.YELLOW, 1, Color.PINK, 2),
+                        BallComparatorFactory.getToLargeSportTypePriorityBallComparator());
+
+        SortingAlgorithm.quickSort(BALLS, ballComparator);
+
+        Assertions.assertEquals(firstType, BALLS.get(0).getType(),
+                "First element TYPE doesn't match after TYPE(TO_LARGE), COLOR(CUSTOM_PRIORITY) sort.");
+
+        List<Type> types = BALLS.stream()
+                .map(Ball::getType).toList();
+
+        TypePriorityBuilder builder = new TypePriorityBuilder();
+        Assertions.assertTrue(isPriorityArray(types, types.size(),
+                        builder.getTypePriorityMapBySportScaleAsc()),
+                "Type is not sorted according to TO_LARGE TYPE priority map");
+
+        ColorPriorityBuilder colorPriorityBuilder = new ColorPriorityBuilder();
+        Map<Color, Integer> colorPriorityMap = colorPriorityBuilder
+                .getCustomColorPriorityMap(Map.of(Color.YELLOW, 1, Color.PINK, 2));
+
+        Map<Type, List<Color>> colorsPerTypeMap = new HashMap<>();
+        for (Type type :
+                Type.values()) {
+            colorsPerTypeMap.put(type, BALLS.stream()
+                    .filter(ball -> ball.getType().equals(type))
+                    .map(Ball::getColor)
+                    .toList());
+        }
+
+        colorsPerTypeMap.forEach((type, colorPerType) ->
+                Assertions.assertTrue(isPriorityArray(colorPerType, colorPerType.size(), colorPriorityMap),
+                        "Attribute COLOR isn't sorted (CUSTOM_PRIORITY) for TYPE: " + type.name() + "."));
+    }
+
+    @Test
+    @DisplayName("Sort by TYPE(TO_SMALL), COLOR(DARK_TO_LIGHT)")
+    public void typePriorityToSmallColorDarkToLightPrioritySort() {
+
+        Type firstType = Type.FOOTBALL; // the smallest
+        ColorPriorityBuilder colorPriorityBuilder = new ColorPriorityBuilder();
+
+        Comparator<Ball> ballComparator = BallComparatorFactory
+                .addColorPriorityComparesToChain(colorPriorityBuilder.getDarkToLightColorPriorityMap(),
+                        BallComparatorFactory.getToSmallSportTypePriorityBallComparator());
+
+        SortingAlgorithm.quickSort(BALLS, ballComparator);
+
+        Assertions.assertEquals(firstType, BALLS.get(0).getType(),
+                "First element TYPE doesn't match after TYPE(TO_SMALL), COLOR(DAR_TO_LIGHT) sort.");
+
+        List<Type> types = BALLS.stream()
+                .map(Ball::getType).toList();
+
+        TypePriorityBuilder builder = new TypePriorityBuilder();
+        Assertions.assertTrue(isPriorityArray(types, types.size(),
+                        builder.getTypePriorityMapBySportScaleDesc()),
+                "Type is not sorted according to TO_SMALL TYPE priority map");
+
+        Map<Type, List<Color>> colorsPerTypeMap = new HashMap<>();
+        for (Type type :
+                Type.values()) {
+            colorsPerTypeMap.put(type, BALLS.stream()
+                    .filter(ball -> ball.getType().equals(type))
+                    .map(Ball::getColor)
+                    .toList());
+        }
+
+        colorsPerTypeMap.forEach((type, colorPerType) ->
+                Assertions.assertTrue(isPriorityArray(colorPerType, colorPerType.size(),
+                                colorPriorityBuilder.getDarkToLightColorPriorityMap()),
+                        "Attribute COLOR isn't sorted (DAR_TO_LIGHT) for TYPE: " + type.name() + "."));
+    }
+
+    @Test
+    @DisplayName("Sort by WEIGHT(asc), COLOR(LIGHT_TO_DARK)")
+    public void ascWeightToSmallColorDarkToLightPrioritySort() {
+
+        ColorPriorityBuilder colorPriorityBuilder = new ColorPriorityBuilder();
+
+        Comparator<Ball> ballComparator = BallComparatorFactory
+                .addColorPriorityComparesToChain(colorPriorityBuilder.getDarkToLightColorPriorityMap(),
+                        BallComparatorFactory.getBallComparator.apply(ComparatorType.ASC_WEIGHT));
+
+        SortingAlgorithm.quickSort(BALLS, ballComparator);
+
+        double[] weights = BALLS.stream()
+                .mapToDouble(Ball::getWeight)
+                .toArray();
+
+        Assertions.assertTrue(isAscArray(weights, weights.length),
+                "List isn't sorted asc by attribute WEIGHT.");
+
+        Map<Double, List<Color>> colorsPerTypeMap = new HashMap<>();
+
+        for (Double weight :
+                Arrays.stream(weights)
+                        .distinct()
+                        .toArray()) {
+
+            colorsPerTypeMap.put(weight, BALLS.stream()
+                    .filter(ball -> ball.getWeight().equals(weight))
+                    .map(Ball::getColor)
+                    .toList());
+        }
+
+        colorsPerTypeMap.forEach((weight, colorPerWeight) ->
+                Assertions.assertTrue(isPriorityArray(colorPerWeight, colorPerWeight.size(),
+                                colorPriorityBuilder.getDarkToLightColorPriorityMap()),
+                        "Attribute COLOR isn't sorted (LIGHT_TO_DARK) for WEIGHT: " + weight + "."));
+    }
+
+    @Test
     @DisplayName("Sort by TYPE(asc), COLOR(asc), WEIGHT(asc)")
     public void ascTypeAscColorAscWeightSort() {
 
@@ -993,6 +1112,13 @@ public class QuickSortSeveralAttributesTest {
                 mapOfColorAndWeightArray.forEach((color, weightArray) ->
                         Assertions.assertTrue(isDescArray(weightArray, weightArray.length),
                                 "Attribute WEIGHT isn't sorted (desc) for TYPE: " + type.name() + "[" + color + "]")));
+    }
+
+    private static <T> boolean isPriorityArray(List<T> array, int n, Map<T, Integer> priority) {
+        if (n == 1 || n == 0) return true;
+        boolean compareResult = priority.get(array.get(n - 2))
+                .compareTo(priority.get(array.get(n - 1))) < 1;
+        return compareResult && isPriorityArray(array, n - 1, priority);
     }
 
     private static boolean isAscArray(double[] array, int n) {
