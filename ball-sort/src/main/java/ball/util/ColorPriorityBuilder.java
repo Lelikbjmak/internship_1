@@ -2,17 +2,19 @@ package ball.util;
 
 import ball.entity.types.Color;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.Random;
 
 public class ColorPriorityBuilder {
+    private final Random random;
 
     public ColorPriorityBuilder() {
+        this.random = new Random();
     }
 
     private Map<Color, Integer> getEqualPriorityColorMap() {
-        Map<Color, Integer> priorityColorMap = new HashMap<>();
+        Map<Color, Integer> priorityColorMap = new EnumMap<>(Color.class);
         for (Color color :
                 Color.values()) {
             priorityColorMap.put(color, Color.values().length);
@@ -27,7 +29,7 @@ public class ColorPriorityBuilder {
     }
 
     public Map<Color, Integer> getDarkToLightColorPriorityMap() {
-        Map<Color, Integer> priorityColorMap = new HashMap<>();
+        Map<Color, Integer> priorityColorMap = new EnumMap<>(Color.class);
         for (Color color :
                 Color.values()) {
             priorityColorMap.put(color, color.ordinal());
@@ -36,7 +38,7 @@ public class ColorPriorityBuilder {
     }
 
     public Map<Color, Integer> getLightToDarkColorPriorityMap() {
-        Map<Color, Integer> priorityColorMap = new HashMap<>();
+        Map<Color, Integer> priorityColorMap = new EnumMap<>(Color.class);
         for (Color color :
                 Color.values()) {
             priorityColorMap.put(color, Color.values().length - color.ordinal());
@@ -45,10 +47,10 @@ public class ColorPriorityBuilder {
     }
 
     public Map<Color, Integer> getRandomColorPriorityMap() {
-        Map<Color, Integer> priorityColorMap = new HashMap<>();
+        EnumMap<Color, Integer> priorityColorMap = new EnumMap<>(Color.class);
         for (Color color :
                 Color.values()) {
-            priorityColorMap.put(color, new Random().nextInt(100 - 1) + 1);
+            priorityColorMap.put(color, this.random.nextInt(100 - 1) + 1);
         }
         return priorityColorMap;
     }
