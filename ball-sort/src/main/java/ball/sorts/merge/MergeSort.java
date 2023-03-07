@@ -1,7 +1,5 @@
 package ball.sorts.merge;
 
-import ball.entity.balls.Ball;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -12,70 +10,74 @@ import java.util.List;
  * @author Denis Solovey
  * @version 1.0
  */
-public class MergeSort {
+public class MergeSort<T> {
+
+    private final Comparator<T> comparator;
+
+    public MergeSort(Comparator<T> comparator) {
+        this.comparator = comparator;
+    }
 
     /**
-     * @method mergeSort - divide initial List with balls recursively into several subLists to sort them separately
-     * @param balls Initial List with balls
-     * @param ballComparator Comparator to compare balls with each other
+     * @param objects Initial List with objects
+     * @method mergeSort() Divide initial List with balls recursively into several subLists to sort them separately
      */
-    public static void mergeSort(List<Ball> balls, Comparator<Ball> ballComparator) {
+    public void mergeSort(List<T> objects) {
 
-        List<Ball> leftSubList = new ArrayList<>();
-        List<Ball> rightSubList = new ArrayList<>();
+        List<T> leftSubList = new ArrayList<>();
+        List<T> rightSubList = new ArrayList<>();
 
         int mid;
 
-        if (balls.size() != 1) {
-            mid = balls.size() / 2;
+        if (objects.size() != 1) {
+            mid = objects.size() / 2;
 
             for (int i = 0; i < mid; i++) {
-                leftSubList.add(balls.get(i));
+                leftSubList.add(objects.get(i));
             }
 
-            for (int i = mid; i < balls.size(); i++) {
-                rightSubList.add(balls.get(i));
+            for (int i = mid; i < objects.size(); i++) {
+                rightSubList.add(objects.get(i));
             }
 
-            mergeSort(leftSubList, ballComparator);
-            mergeSort(rightSubList, ballComparator);
-            merge(leftSubList, rightSubList, balls, ballComparator);
+            mergeSort(leftSubList);
+            mergeSort(rightSubList);
+            merge(leftSubList, rightSubList, objects);
         }
     }
 
     /**
-     * @method merge - merge 2 lists into one
-     * @param leftBallList - left SubList with balls
-     * @param rightBallList - right SubList with balls
-     * @param balls - initial List with balls
-     * @param ballComparator - ball Comparator
+     * @param leftList  Left SubList with balls
+     * @param rightList Right SubList with balls
+     * @param initial   Initial List with balls
+     * @method merge() Merge 2 lists into one
      */
-    private static void merge(List<Ball> leftBallList, List<Ball> rightBallList, List<Ball> balls, Comparator<Ball> ballComparator) {
+    private void merge(List<T> leftList, List<T> rightList, List<T> initial) {
 
         int left = 0;
         int right = 0;
 
         int res = 0;
 
-        while (left < leftBallList.size() && right < rightBallList.size()) {
+        while (left < leftList.size() && right < rightList.size()) {
 
-            if (ballComparator.compare(leftBallList.get(left), rightBallList.get(right)) < 0) {
-                balls.set(res, leftBallList.get(left));
+            if (comparator.compare(leftList.get(left), rightList.get(right)) < 0) {
+                initial.set(res, leftList.get(left));
                 left++;
             } else {
-                balls.set(res, rightBallList.get(right));
+                initial.set(res, rightList.get(right));
                 right++;
             }
             res++;
         }
 
-        while (left < leftBallList.size()) {
-            balls.set(res, leftBallList.get(left));
+        while (left < leftList.size()) {
+            initial.set(res, leftList.get(left));
             res++;
             left++;
         }
-        while (right < rightBallList.size()) {
-            balls.set(res, rightBallList.get(right));
+        while (right < rightList.size()) {
+            initial.set(res, rightList.get(right));
             res++;
             right++;
         }
