@@ -14,6 +14,10 @@ import java.util.Map;
  */
 public class BallComparatorUtils {
 
+    private BallComparatorUtils() {
+        throw new IllegalArgumentException("Class " + this.getClass() + " is Util class.");
+    }
+
     private static Map<Color, Integer> colorPriorityMap;
 
     private static Map<Type, Integer> typePriorityMap;

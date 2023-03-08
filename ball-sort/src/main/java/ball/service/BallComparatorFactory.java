@@ -10,9 +10,7 @@ import ball.util.ColorPriorityBuilder;
 import ball.util.TypePriorityBuilder;
 
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentMap;
 import java.util.function.Function;
 
 /**
@@ -25,7 +23,7 @@ public class BallComparatorFactory {
      *
      * @see Function
      */
-    public static Function<ComparatorType, BallComparator> getBallComparator = (comparatorType) -> {
+    public static final Function<ComparatorType, BallComparator> getBallComparator = (comparatorType) -> {
 
         switch (comparatorType) {
             case ASC_WEIGHT -> {
@@ -93,15 +91,6 @@ public class BallComparatorFactory {
         BallComparatorUtils.setTypePriorityMap(builder.getCustomTypePriorityMap(typeIntegerMap));
         ballComparator = ballComparator.thenComparing(BallComparatorUtils::compareByTypePriority);
         return ballComparator;
-    }
-
-    private static Map<Color, Integer> getDefaultColorPriorityMap() {
-        Map<Color, Integer> colorPriority = new HashMap<>();
-        for (Color color :
-                Color.values()) {
-            colorPriority.put(color, 0);
-        }
-        return colorPriority;
     }
 
     public static BallComparator getCustomColorPriorityBallComparator(Map<Color, Integer> colorPriority) {
