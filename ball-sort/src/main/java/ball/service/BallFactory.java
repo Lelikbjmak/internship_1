@@ -7,13 +7,17 @@ import ball.mapper.BallRequestToBallMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class BallFactory {
 
-    private long basketNumber = 0;
+    private int basketNumber = 0;
+
+    private final Random random;
 
     public BallFactory() {
         this.baskets = new ArrayList<>();
+        this.random = new Random();
     }
 
     private final List<Basket> baskets;
@@ -46,7 +50,12 @@ public class BallFactory {
     }
 
     public int lessLoadedBasketIndex() {
-        int lessLoadedBasket = this.baskets.stream().mapToInt(basket -> basket.getBalls().size()).min().getAsInt();
+
+        int lessLoadedBasket = this.baskets.stream()
+                .mapToInt(basket -> basket.getBalls().size())
+                .min()
+                .orElse(random.nextInt((basketNumber - 1)));
+
         for (int i = 0; i < this.baskets.size(); i++) {
             if (baskets.get(i).getBalls().size() == lessLoadedBasket)
                 return i;
