@@ -1,6 +1,6 @@
-package ball.sorts.merge;
+package com.innowise.ball_factory.sorts.merge;
 
-import ball.entity.balls.Ball;
+import com.innowise.ball_factory.entity.Ball;
 
 import java.util.Comparator;
 import java.util.concurrent.RecursiveAction;
