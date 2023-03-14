@@ -8,10 +8,15 @@ import java.util.Objects;
 /**
  * Ball - frame for all Balls we have.
  */
-public abstract class Ball implements Comparable<Ball> {
+public class Ball implements Comparable<Ball> {
 
-    Ball(Type type) {
+    public Ball(String name, double circumference,
+                double weight, Color color, Type type) {
         this.type = type;
+        this.name = name;
+        this.circumference = circumference;
+        this.weight = weight;
+        this.color = color;
     }
 
     protected String name;
@@ -64,7 +69,10 @@ public abstract class Ball implements Comparable<Ball> {
         return weight;
     }
 
-    public abstract String toString();
+    public String toString() {
+        return "\nName: " + name + "\nType: " + type.name() + "\nColor: "
+                + color.name() + "\nWeight: " + weight + "\nCircumference: " + circumference;
+    }
 
     public int compareTo(Ball o) {
         return this.getName().compareTo(o.getName());
