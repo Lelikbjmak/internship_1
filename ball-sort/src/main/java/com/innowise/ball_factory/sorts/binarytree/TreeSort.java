@@ -1,6 +1,6 @@
-package com.innowise.ball_factory.sorts.binary_tree;
+package com.innowise.ball_factory.sorts.binarytree;
 
-import com.innowise.ball_factory.sorts.Sortable;
+import com.innowise.ball_factory.sorts.Sorter;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -13,7 +13,7 @@ import java.util.List;
  * @author Denis Solovey
  * @version 1.0
  */
-public class TreeSort<T> implements Sortable<T> {
+public class TreeSort<T> implements Sorter<T> {
 
     private final Tree<T> tree;
 

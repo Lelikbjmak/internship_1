@@ -1,4 +1,4 @@
-package com.innowise.ball_factory.sorts.binary_tree;
+package com.innowise.ball_factory.sorts.binarytree;
 
 /**
  * @param <T> - generic for provided Object in Node of Binary Tree

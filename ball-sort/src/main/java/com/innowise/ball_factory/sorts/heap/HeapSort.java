@@ -1,6 +1,6 @@
 package com.innowise.ball_factory.sorts.heap;
 
-import com.innowise.ball_factory.sorts.Sortable;
+import com.innowise.ball_factory.sorts.Sorter;
 
 import java.util.Comparator;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
  * @author Denis Solovey
  * @version 1.0
  */
-public class HeapSort<T> implements Sortable<T> {
+public class HeapSort<T> implements Sorter<T> {
 
     /**
      * @param objectList Objects we are sorting

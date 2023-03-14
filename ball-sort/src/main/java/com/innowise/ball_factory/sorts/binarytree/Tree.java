@@ -1,4 +1,4 @@
-package com.innowise.ball_factory.sorts.binary_tree;
+package com.innowise.ball_factory.sorts.binarytree;
 
 import java.util.Comparator;
 import java.util.List;

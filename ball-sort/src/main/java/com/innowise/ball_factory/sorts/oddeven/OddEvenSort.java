@@ -1,6 +1,6 @@
-package com.innowise.ball_factory.sorts.odd_even;
+package com.innowise.ball_factory.sorts.oddeven;
 
-import com.innowise.ball_factory.sorts.Sortable;
+import com.innowise.ball_factory.sorts.Sorter;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,7 +12,7 @@ import java.util.List;
  * @author Denis Solovey
  * @version 1.0
  */
-public class OddEvenSort<T> implements Sortable<T> {
+public class OddEvenSort<T> implements Sorter<T> {
 
     /**
      * @method oddEvenSort() sort function

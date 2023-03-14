@@ -1,6 +1,6 @@
 package com.innowise.ball_factory.sorts.merge;
 
-import com.innowise.ball_factory.sorts.Sortable;
+import com.innowise.ball_factory.sorts.Sorter;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -12,7 +12,7 @@ import java.util.List;
  * @author Denis Solovey
  * @version 1.0
  */
-public class MergeSort<T> implements Sortable<T> {
+public class MergeSort<T> implements Sorter<T> {
 
     /**
      * @param objectList Initial List with objects
